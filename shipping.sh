@@ -12,8 +12,8 @@ USERID=$(id -u) # userid of root user 0, and others non-zero
 LOGS_FOLDER="/var/log/shell-roboshop"
 LOGS_FILE="$LOGS_FOLDER/$0.log"
 MYSQL_HOST="mysql.asadaws2026.online"
-MYSQL_USER=root
-MYSQL_PASSWD=RoboShop@1
+MYSQL_USER="root"
+MYSQL_PASSWD="RoboShop@1"
 
 if [ $USERID -ne 0 ]; then
     echo -e "$R Please run this script with root user access $N" | tee -a $LOGS_FILE
