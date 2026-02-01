@@ -7,7 +7,7 @@ Y='\e[33m'
 B='\e[34m'
 N='\e[0m'
 
-
+SCRIPT_DIR=$(PWD)
 USERID=$(id -u) # userid of root user 0, and others non-zero
 LOGS_FOLDER="/var/log/shell-roboshop"
 LOGS_FILE="$LOGS_FOLDER/$0.log"
@@ -47,6 +47,9 @@ else
     echo -e "Roboshop user already exists...$Y SKIPPING $N" | tee -a $LOGS_FILE
 fi
 
+rm -rf /app
+VALIDATE $? "Remove the /app directory if already exists"
+
 mkdir -p /app 
 VALIDATE $? "Creating Application directory"
 
@@ -59,11 +62,11 @@ VALIDATE $? "Go to Application directory"
 unzip /tmp/catalogue.zip  &>> $LOGS_FILE
 VALIDATE $? "Unzip the application code"
 
-cd /app
-VALIDATE $? "Move to Application directory"
-
 npm install  &>> $LOGS_FILE
 VALIDATE $? "Install dependencies"
+
+cd $SCRIPT_DIR
+VALIDATE $? "Moving back to Script directory after installing dependencies in /app dir"
 
 cp catalogue.service /etc/systemd/system/catalogue.service
 VALIDATE $? "Setup Systemd catalogue service for systemctl"
