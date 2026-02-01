@@ -88,7 +88,7 @@ if [ $(mongosh --host $MONGODB_HOST --eval 'db.getMongo().getDBNames().indexOf("
     mongosh --host $MONGODB_HOST </app/db/master-data.js &>> $LOGS_FILE
     VALIDATE $? "Loading the catalogue data into MongoDB"
 else
-    echo "Catalogue database already exists"
+    echo "Catalogue database already exists... $Y SKIPPING $N"
 fi
 
 systemctl restart catalogue
