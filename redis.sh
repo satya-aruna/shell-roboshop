@@ -40,7 +40,10 @@ dnf install redis -y &>> $LOGS_FILE
 VALIDATE $? "Installing Redis"
 
 sed -i 's/127.0.0.1 -/0.0.0.0/g' /etc/redis/redis.conf
-VALIDATE $? "redis.conf change to allow all connections"
+VALIDATE $? "redis.conf change to allow all connections (-::1)"
+
+sed -i 's/127.0.0.1 /0.0.0.0/g' /etc/redis/redis.conf
+VALIDATE $? "redis.conf change to allow all connections (::1)"
 
 sed -i 's/protected-mode yes/protected-mode no/g' /etc/redis/redis.conf
 VALIDATE $? "redis.conf change protected-mode to no"
