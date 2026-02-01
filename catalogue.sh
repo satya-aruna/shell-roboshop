@@ -7,7 +7,7 @@ Y='\e[33m'
 B='\e[34m'
 N='\e[0m'
 
-SCRIPT_DIR=$(PWD)
+SCRIPT_DIR=$(pwd)
 USERID=$(id -u) # userid of root user 0, and others non-zero
 LOGS_FOLDER="/var/log/shell-roboshop"
 LOGS_FILE="$LOGS_FOLDER/$0.log"
