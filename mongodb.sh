@@ -30,21 +30,21 @@ VALIDATE()
     fi
 }
 
-cp mongo.repo /etc/yum.repos.d/mongo.repo
+cp mongo.repo /etc/yum.repos.d/mongo.repo &>> $LOGS_FILE
 VALIDATE $? "Copying Mongo repo"
 
-dnf install mongodb-org -y 
+dnf install mongodb-org -y &>> $LOGS_FILE
 VALIDATE $? "Installing Mongodb"
 
-systemctl enable mongod
+systemctl enable mongod &>> $LOGS_FILE
 VALIDATE $? "Enable Mongodb"
 
-systemctl start mongod
+systemctl start mongod 
 VALIDATE $? "Start Mongodb"
 
-sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
+sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf 
 VALIDATE $? "mongod.conf change to allow all connections"
 
-systemctl restart mongod
+systemctl restart mongod 
 VALIDATE $? "Restart Mongodb after config changes"
 
