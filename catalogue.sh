@@ -84,5 +84,12 @@ VALIDATE $? "Setup mongodb repo"
 dnf install mongodb-mongosh -y &>> $LOGS_FILE
 VALIDATE $? "Installing mongodb client"
 
-mongosh --host $MONGODB_HOST </app/db/master-data.js &>> $LOGS_FILE
-VALIDATE $? "Loading Master data into MongoDB"
+if [ $(mongosh --host $MONGODB_HOST --eval 'db.getMongo().getDBNames().indexOf("catalogue")' --quiet) -lt 0 ]; then
+    mongosh --host $MONGODB_HOST </app/db/master-data.js &>> $LOGS_FILE
+    VALIDATE $? "Loading the catalogue data into MongoDB"
+else
+    echo "Catalogue database already exists"
+fi
+
+systemctl restart catalogue
+VALIDATE $? "Restart catalogue service"
