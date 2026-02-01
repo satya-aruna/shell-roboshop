@@ -42,10 +42,16 @@ VALIDATE $? "Enable RabbitMQ"
 systemctl start rabbitmq-server 
 VALIDATE $? "Start RabbitMQ"
 
-# create RabbitMQ application user
+# Check if a user named 'roboshop' exists
+rabbitmqctl list_users | grep -q "^roboshop\s"
 
-rabbitmqctl add_user roboshop roboshop123
-VALIDATE $? "Creating rabbitmq application user"
+# Check exit status: 0 if exists, 1 if not
+if [ $? -eq 0 ]; then
+    echo -e "User roboshop exists...$Y SKIPPING $N"
+else
+    rabbitmqctl add_user roboshop roboshop123
+    VALIDATE $? "Creating rabbitmq application user"
 
-rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
-VALIDATE $? "Setting permissions to rabbitmq application user"
+    rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
+    VALIDATE $? "Setting permissions to rabbitmq application user"
+fi
