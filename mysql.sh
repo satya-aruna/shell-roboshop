@@ -38,3 +38,6 @@ VALIDATE $? "Enable mysql server"
 
 systemctl start mysqld 
 VALIDATE $? "Start mysql server"
+
+mysql_secure_installation --set-root-pass RoboShop@1
+VALIDATE $? "Changing the default root password"
