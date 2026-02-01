@@ -65,3 +65,14 @@ VALIDATE $? "Move to Application directory"
 npm install  &>> $LOGS_FILE
 VALIDATE $? "Install dependencies"
 
+cp catalogue.service /etc/systemd/system/catalogue.service
+VALIDATE $? "Setup Systemd catalogue service for systemctl"
+
+systemctl daemon-reload
+VALIDATE $? "Reload the newly created systemd catlogue service"
+
+systemctl enable catalogue
+VALIDATE $? "Enable catalogue service"
+
+systemctl start catalogue
+VALIDATE $? "Start catalogue service"
