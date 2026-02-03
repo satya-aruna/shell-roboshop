@@ -39,8 +39,8 @@ VALIDATE $? "Enabling Redis version 7"
 dnf install redis -y &>> $LOGS_FILE
 VALIDATE $? "Installing Redis"
 
-sed -i 's/127.0.0.1 -/0.0.0.0/g' /etc/redis/redis.conf
-VALIDATE $? "redis.conf change to allow all connections (-::1)"
+#sed -i 's/127.0.0.1 -/0.0.0.0/g' /etc/redis/redis.conf
+#VALIDATE $? "redis.conf change to allow all connections (-::1)"
 
 sed -i 's/127.0.0.1 /0.0.0.0/g' /etc/redis/redis.conf
 VALIDATE $? "redis.conf change to allow all connections (::1)"
