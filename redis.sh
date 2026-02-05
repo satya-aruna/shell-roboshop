@@ -46,7 +46,7 @@ VALIDATE $? "Installing Redis"
 # VALIDATE $? "redis.conf change protected-mode to no"
 
 # making all config changes at the same time using sed
-sed -i -e 's/127.0.0.1/0.0.0.0/g' -e '/protected-mode/ c protected-mode no'
+sed -i -e 's/127.0.0.1/0.0.0.0/g' -e '/protected-mode/ c protected-mode no' /etc/redis/redis.conf
 VALIDATE $? "redis.conf change to allow all connections and disable protected-mode"
 
 systemctl enable redis &>> $LOGS_FILE
